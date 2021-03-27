@@ -12,16 +12,33 @@ function useToggle() {
   // `aria-pressed` and `onClick` properties.
   const togglerProps = {'aria-pressed': on, onClick: toggle}
 
-  return {on,togglerProps}
+  const getProps = (...args) => {
+    console.log("args are:", args);
+    if (args.length === 0) return togglerProps;
+    else {
+      const filteredProps = {};
+      for (let key in togglerProps) {
+        if (args.includes(key)) {
+          filteredProps[key] = togglerProps[key];
+        }
+      }
+      return filteredProps;
+    }
+  }
+
+  return {on,getProps}
 }
 
 function App() {
-  const {on, togglerProps} = useToggle()
+  const {on, getProps} = useToggle()
+
+  const allProps = getProps();
+  const customProps = getProps('on');
   return (
     <div>
-      <Switch on={on} {...togglerProps} />
+      <Switch on={on} {...allProps} />
       <hr />
-      <button aria-label="custom-button" {...togglerProps}>
+      <button aria-label="custom-button" onClick={() => console.info('test ')} {...customProps}>
         {on ? 'on' : 'off'}
       </button>
     </div>
