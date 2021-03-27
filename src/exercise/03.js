@@ -38,6 +38,7 @@ function ToggleButton({props}) {
   return <Switch on={on} onClick={toggle} {...props} />
 }
 
+
 function App() {
   return (
     <div>
@@ -51,6 +52,7 @@ function App() {
     </div>
   )
 }
+
 
 export default App
 
